@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2A2B37;
+  --color-secondary: #202123;
+  --color-hover: #66FCF1;
+}
+
+@layer base {
+  body {
+    @apply bg-primary;
+  }
+
+  div {
+    scrollbar-width: none;
+  }
+}

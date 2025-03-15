@@ -1,12 +1,37 @@
 import React, { useEffect, useState } from "react";
 import CodeSnippet from "../components/code-snippet/code-snippet";
+import Button from "../components/button/button";
 const BestTime = () => {
   const [prices, setPrices] = useState([]);
-  console.log(prices);
+  const [maxProfit, setMaxProfit] = useState(0);
+  const [buyDay, setBuyDay] = useState(null);
+  const [sellDay, setSellDay] = useState(null);
+
+  const calculateMaxProfit = () => {
+    let minPrice = Infinity;
+    let minIndex = -1;
+    let profit = 0;
+    let sellIndex = -1;
+
+    for (let i = 0; i < prices.length; i++) {
+      if (prices[i] < minPrice) {
+        minPrice = prices[i];
+        minIndex = i;
+      }
+      if (prices[i] - minPrice > profit) {
+        profit = prices[i] - minPrice;
+        sellIndex = i;
+      }
+    }
+
+    setMaxProfit(profit);
+    setBuyDay(minIndex);
+    setSellDay(sellIndex);
+  };
 
   useEffect(() => {
     if (prices) {
-      const pricesRandom = Array.from({ length: 5 }, () =>
+      const pricesRandom = Array.from({ length: 7 }, () =>
         Math.floor(Math.random() * 20)
       );
       setPrices(pricesRandom);
@@ -52,6 +77,22 @@ const BestTime = () => {
         về 0.
       </p>
       <CodeSnippet content={prices} id="prices" space={0} />
+      <Button setClicked={() => calculateMaxProfit()} />
+
+      {buyDay !== null && sellDay !== null && (
+        <div className="p-4 bg-gray-100 rounded-lg shadow-md text-black">
+          <p className="text-lg font-semibold text-blue-700">
+            💰 <span className="">Lợi nhuận cao nhất:</span>
+            <span className="text-green-600 font-bold"> {maxProfit}</span>
+          </p>
+          <p className="text-lg">
+            📉 <b>Mua vào ngày:</b> {buyDay} với giá {prices[buyDay]}
+          </p>
+          <p className="text-lg">
+            📈 <b>Bán vào ngày:</b> {sellDay} với giá {prices[sellDay]}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

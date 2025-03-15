@@ -104,10 +104,10 @@ const Search = () => {
       </h1>
       <p>Cho danh sách sản phẩm</p>
       <CodeSnippet content={arrPhone} id="arrPhone" />
-      <Button setClicked={() => setClicked(!clicked)} />
+      <Button setClicked={() => setClicked(prev => !prev)} />
       <div
         className={`absolute ${
-          clicked ? "top-full" : "top-0"
+          clicked ? "top-0" : "top-full"
         } left-0 right-0 w-full h-full transition-all duration-500 bg-white p-10 flex flex-col gap-10`}
       >
         <h1 className="text-2xl font-bold mb-4 text-black">
@@ -135,7 +135,7 @@ const Search = () => {
           />
         </div>
         <SearchModal filteredPhones={filteredPhones} />
-        <Button label="Thoát" setClicked={() => setClicked(!clicked)} />
+        <Button label="Thoát" setClicked={() => setClicked(prev => !prev)} />
       </div>
     </div>
   );
